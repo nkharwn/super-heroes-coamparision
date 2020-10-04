@@ -1,0 +1,63 @@
+<div class="container">
+
+    <div class="d-flex justify-content-center">
+        <h3 id="title">Super-Heroes/Villain Comaprision</h3>
+    </div>
+
+    <div class="row top-buffer">
+        <mat-form-field class="example-full-width">
+            <input type="text" placeholder="Select Super Heroes" aria-label="Select Super Heroes" matInput
+                [matAutocomplete]="auto" [formControl]="superHeroControl">
+            <button mat-button mat-icon-button matSuffix (click)="clearSearchField()">
+                <mat-icon>close</mat-icon>
+            </button>
+            <mat-hint>Enter text to find Super Heros by name</mat-hint>
+
+        </mat-form-field>
+
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            <mat-option *ngFor="let hero of filteredSuperHeroes | async" [value]="selectedSuperHeroes">
+                <div (click)="optionClicked($event, hero)">
+                    <mat-checkbox [checked]="hero.selected" (change)="toggleSelection(hero)"
+                        (click)="$event.stopPropagation()" [disabled]="selectedSuperHeroes.length>=4">
+                        {{ hero.name }}
+                    </mat-checkbox>
+                </div>
+            </mat-option>
+        </mat-autocomplete>
+
+
+    </div>
+    <div class="row top-buffer chartarea justify-content-center">
+        
+      <app-redial-chart></app-redial-chart>
+
+    </div>
+    <div class="row top-buffer">
+      
+        <div class="col-10">
+            <label>Selected Heroes:</label>
+        </div>
+        <div class="col-2">
+            <button type="button" class="btn btn-light float-left"  (click)="clearSearchField()">Reset</button>
+            <button type="button" class="btn btn-light float-right" (click)="compare()">Compare</button>
+        </div>
+    </div>
+    <div class="row top-buffer">
+        <mat-chip-list aria-label="super heroes selection">
+            <mat-chip color="primary" *ngFor="let hero of selectedSuperHeroes">
+                {{ hero.name }}
+            </mat-chip>
+        </mat-chip-list>
+    </div>
+
+        
+
+
+    
+
+
+   
+
+
+</div>
